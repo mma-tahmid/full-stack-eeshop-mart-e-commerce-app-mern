@@ -1,0 +1,26 @@
+.navbar {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    line-height: 26px;
+    box-shadow: 0 8px 6px -6px gray;
+    /* webkit support for different Browser  */
+    --webkit-box-shadow: 0 8px 6px -6px gray;
+    border-bottom: solid gray !important;
+    /* text-transform: uppercase; */
+
+}
+
+.nav-link {
+    font-weight: 600 !important;
+}
+
+.active {
+
+    border-bottom: 2px solid black !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-family: "roboto", sans-serif;
+    letter-spacing: 3px;
+}
