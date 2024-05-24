@@ -12,6 +12,7 @@ import LoginPage from './Pages/Auth/LoginPage'
 //import Dashboard from './Pages/User/Dashboard'
 import PrivateRotess from './Components/Routes/Private'
 import Dashboard from './Pages/User/Dashboard'
+import ForgotPassword from './Pages/Auth/ForgotPassword'
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* Nested Routes */}
-          
+
           <Route path="/dashboard" element={<PrivateRotess />}>
 
             <Route path="" element={<Dashboard />} />
@@ -41,6 +42,8 @@ function App() {
 
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/policy" element={<PolicyPage />} />

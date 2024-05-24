@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import Layout from '../../Components/Layout';
-import { useLocation, useNavigate } from 'react-router-dom';
-
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import { useAuth } from '../../contextApi/authContext';
 
-const LoginPage = () => {
+const ForgotPassword = () => {
+
 
 
     const navigate = useNavigate()
-    const location = useLocation();
+
 
     // Create State
     // name is getter function & setName is a setter Function
 
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [answer, setAnswer] = useState("")
 
-    // custom Hook
-    const [auth, setAuth] = useAuth()
+
 
     // form submit function 
     const handleSubmit = async (event) => {
@@ -27,20 +26,13 @@ const LoginPage = () => {
         event.preventDefault()  // prevent default function use  korle,  form submit Buttton a Click korle page reload hobe na 
 
         try {
-            const response = await axios.post("/api/v3/user-auth/login", { email, password })
+            const response = await axios.post("/api/v3/user-auth/forgot-password", { email, newPassword, answer })
 
             if (response.data.success) {
 
                 toast.success(response.data.message, { position: "top-right" })
-                setAuth({
-                    ...auth,
-                    user: response.data.userss,
-                    token: response.data.createToken
-                })
 
-                localStorage.setItem('auth', JSON.stringify(response.data)) // json Data local storage a support kore na. tai stringify korte hoi
-
-                navigate(location.state || '/')
+                navigate('/login')
             }
             else {
                 toast.error(response.data.message)
@@ -58,14 +50,13 @@ const LoginPage = () => {
 
 
     return (
-
         <>
 
-            <Layout>
+            <Layout title={'Forgot password - Ecommerce App'}>
 
                 <div className='form-container'>
 
-                    <h1> Login Page </h1>
+                    <h1> Reset Password </h1>
 
                     <form onSubmit={handleSubmit}>
 
@@ -81,24 +72,28 @@ const LoginPage = () => {
                         </div>
 
                         <div className="mb-3">
+
+                            <input type="text" className="form-control" id="exampleInputPassword1" placeholder='Enter your favorite sports name' required
+                                value={answer}
+                                onChange={(event) => setAnswer(event.target.value)}
+                            />
+                        </div>
+
+                        <div className="mb-3">
                             {/* <label htmlFor="exampleInputPassword1" className="form-label">Password</label> */}
-                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Enter your Password' required
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
+                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Enter your New Password' required
+                                value={newPassword}
+                                onChange={(event) => setNewPassword(event.target.value)}
                             />
                         </div>
 
 
 
                         <div>
-                            <button type="submit" className="btn btn-primary mb-3">Login</button>
+                            <button type="submit" className="btn btn-primary mb-3">Reset</button>
 
                         </div>
 
-                        <div>
-                            <button type="button" className="btn btn-primary" onClick={() => { navigate('/forgot-password') }}> Forgot Password </button>
-
-                        </div>
 
                     </form>
 
@@ -107,11 +102,10 @@ const LoginPage = () => {
 
                 </div>
 
-
             </Layout>
 
         </>
     );
 };
 
-export default LoginPage;
+export default ForgotPassword;

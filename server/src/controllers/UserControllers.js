@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 exports.Registration = async (req, res) => {
 
     try {
-        const { name, email, password, phone, address } = req.body
+        const { name, email, password, phone, address, answer } = req.body
 
         // validation
         if (!name) {
@@ -29,6 +29,10 @@ exports.Registration = async (req, res) => {
 
         if (!address) {
             return res.send({ errors: "Address is Required" })
+        }
+
+        if (!answer) {
+            return res.send({ errors: "Answer is Required" })
         }
 
         // Check existing users
@@ -52,7 +56,8 @@ exports.Registration = async (req, res) => {
             email,
             password: hash,
             phone,
-            address
+            address,
+            answer
         }).save()
 
         res.status(201).send({
@@ -163,6 +168,65 @@ exports.Login = async (req, res) => {
     }
 }
 
+
+
+
+
+// Forgot Password
+
+exports.ForgotPassword = async (req, res) => {
+
+    try {
+
+        const { email, answer, newPassword } = req.body
+
+        if (!email) {
+            res.status(400).send({ message: "Email is Required" })
+        }
+
+        if (!answer) {
+            res.status(400).send({ message: "Answer is Required" })
+        }
+
+        if (!newPassword) {
+            res.status(400).send({ message: "New Password is Required" })
+        }
+
+        // Check email & answer is matching then user can set New Password 
+        const user = await usersModel.findOne({ email, answer })
+
+        // Validation
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: 'Wrong Email or Password',
+            })
+        }
+
+
+        const salt = bcryptss.genSaltSync(10);
+        const hashsPassword = bcryptss.hashSync(newPassword, salt);
+        await usersModel.findByIdAndUpdate(user._id, { password: hashsPassword })
+
+        res.status(200).send({
+            success: true,
+            message: "passwords reset Successfully"
+        })
+
+    }
+
+    catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'Something went wrong',
+            error
+        })
+
+
+    }
+
+}
 
 // test Controller For authorization
 

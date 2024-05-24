@@ -18,6 +18,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
+    const [answer, setAnswer] = useState("")
 
 
     // form submit function 
@@ -26,7 +27,7 @@ const RegisterPage = () => {
         event.preventDefault()  // prevent default function use  korle,  form submit Buttton a Click korle page reload hobe na 
 
         try {
-            const response = await axios.post("/api/v3/user-auth/registration", { name, email, password, phone, address })
+            const response = await axios.post("/api/v3/user-auth/registration", { name, email, password, phone, address, answer })
 
             if (response.data.success) {
 
@@ -99,6 +100,14 @@ const RegisterPage = () => {
                             <input type="text" className="form-control" id="exampleInputAddress" placeholder='Enter Your Address' required
                                 value={address}
                                 onChange={(event) => setAddress(event.target.value)}
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            {/* <label htmlFor="exampleInputAddress" className="form-label"> Address </label> */}
+                            <input type="text" className="form-control" id="exampleInputAddress" placeholder='What is your favorite sports' required
+                                value={answer}
+                                onChange={(event) => setAnswer(event.target.value)}
                             />
                         </div>
 

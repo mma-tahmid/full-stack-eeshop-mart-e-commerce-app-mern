@@ -11,6 +11,9 @@ const router = express.Router();
 router.post("/registration", userControllers.Registration);
 router.post("/login", userControllers.Login);
 
+// forgot Password 
+router.post('/forgot-password', userControllers.ForgotPassword)
+
 // Protected route auth 
 
 router.get('/user-authentication', (req, res) => {

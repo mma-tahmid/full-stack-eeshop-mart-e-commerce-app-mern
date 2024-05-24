@@ -61,10 +61,26 @@ const NavBarComponent = () => {
                                             <NavLink to="/login" className="nav-link" >Login </NavLink>
                                         </li>
                                     </>
+
                                 ) : (<>
-                                    <li className="nav-item">
-                                        <NavLink onClick={handleLogout} to="/login" className="nav-link" >Log Out </NavLink>
+
+
+                                    <li className="nav-item dropdown">
+                                        <NavLink className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {auth?.user?.name}
+                                        </NavLink>
+
+                                        <ul className="dropdown-menu">
+                                            <li> <NavLink to="/dashboard" className="dropdown-item"> Dashboard </NavLink> </li>
+
+                                            <li> <NavLink clas onClick={handleLogout} to="/login" className="dropdown-item"> Log Out </NavLink> </li>
+                                        </ul>
                                     </li>
+
+
+                                    {/* <li> <NavLink onClick={handleLogout} to="/login" className="nav-link" > Log Out </NavLink> </li> */}
+
+
 
                                 </>)
                             }
