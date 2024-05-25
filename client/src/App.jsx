@@ -13,6 +13,13 @@ import LoginPage from './Pages/Auth/LoginPage'
 import PrivateRotess from './Components/Routes/Private'
 import Dashboard from './Pages/User/Dashboard'
 import ForgotPassword from './Pages/Auth/ForgotPassword'
+import AdminRoute from './Components/Routes/AdminRoute'
+import AdminDashboard from './Pages/Admin/AdminDashboard'
+import AdminCreateCategoryPage from './Pages/Admin/AdminCreateCategoryPage'
+import AdminCreateProductPage from './Pages/Admin/AdminCreateProductPage'
+import AllUsersPage from './Pages/Admin/AllUsersPage'
+import UserOrderPage from './Pages/User/UserOrderPage'
+import UserProfilePage from './Pages/User/UserProfilePage'
 
 function App() {
 
@@ -34,7 +41,18 @@ function App() {
 
           <Route path="/dashboard" element={<PrivateRotess />}>
 
-            <Route path="" element={<Dashboard />} />
+            <Route path="user" element={<Dashboard />} />
+            <Route path="user/orders" element={<UserOrderPage />} />
+            <Route path="user/profile" element={<UserProfilePage />} />
+
+          </Route>
+
+          <Route path="/dashboard" element={<AdminRoute />}>
+
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/create-category" element={<AdminCreateCategoryPage />} />
+            <Route path="admin/create-product" element={<AdminCreateProductPage />} />
+            <Route path="admin/useresss" element={<AllUsersPage />} />
 
           </Route>
 

@@ -14,9 +14,15 @@ router.post("/login", userControllers.Login);
 // forgot Password 
 router.post('/forgot-password', userControllers.ForgotPassword)
 
-// Protected route auth 
+// Protected User route for  
 
-router.get('/user-authentication', (req, res) => {
+router.get('/user-authentication', CheckNormalUser, (req, res) => {
+    res.status(200).send({ ok: true })
+})
+
+// Protected Admin route  
+
+router.get('/admin-authentication', CheckNormalUser, CheckAdmin, (req, res) => {
     res.status(200).send({ ok: true })
 })
 
@@ -24,7 +30,7 @@ router.get('/user-authentication', (req, res) => {
 // test Route
 // router.get('/test', CheckNormalUser, CheckAdmin, userControllers.TestController)
 
-router.get('/test2', CheckNormalUser, userControllers.TestController)
+//router.get('/test2', CheckNormalUser, userControllers.TestController)
 
 
 

@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 import axios from 'axios'
 import Spinner from "../Spinner";
 
-// Private Route Means ------> User Route
+// Admin Route 
 
-export default function PrivateRotess() {
+export default function AdminRoute() {
 
 
     const [ok, setOk] = useState(false)
@@ -17,7 +17,7 @@ export default function PrivateRotess() {
     useEffect(() => {
 
         const authCheck = async () => {
-            const response = await axios.get('/api/v3/user-auth/user-authentication')
+            const response = await axios.get('/api/v3/user-auth/admin-authentication')
 
             if (response.data.ok) {
                 setOk(true)
@@ -32,7 +32,7 @@ export default function PrivateRotess() {
 
     }, [auth?.token])
 
-    return ok ? <Outlet /> : <Spinner />
+    return ok ? <Outlet /> : <Spinner path='' />
 
 }
 
