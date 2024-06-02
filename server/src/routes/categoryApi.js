@@ -19,7 +19,7 @@ router.get("/get-all-category", categoryControllers.GetAllCategory);
 router.get("/get-single-category/:slugs", categoryControllers.GetSingleCategory);
 
 // delete category
-router.get("/delete-category/:categoryId", CheckNormalUser, CheckAdmin, categoryControllers.DeleteCategory);
+router.delete("/delete-category/:categoryid", CheckNormalUser, CheckAdmin, categoryControllers.DeleteCategory);
 
 
 

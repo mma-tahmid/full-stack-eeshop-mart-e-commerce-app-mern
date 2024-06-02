@@ -102,7 +102,7 @@ exports.GetAllCategory = async (req, res) => {
         res.status(200).send({
             success: true,
             message: "All Categories List",
-            getAllCategory
+            output: getAllCategory
         })
 
     }
@@ -153,9 +153,10 @@ exports.DeleteCategory = async (req, res) => {
 
     try {
 
-        const { categoryId } = req.params
+        // const { categoryid } = req.params
+        const categoriedId = req.params.categoryid
 
-        const deleteCategory = await categoryModel.findByIdAndDelete(categoryId)
+        const deleteCategory = await categoryModel.findByIdAndDelete(categoriedId)
 
         res.status(200).send({
             success: true,
