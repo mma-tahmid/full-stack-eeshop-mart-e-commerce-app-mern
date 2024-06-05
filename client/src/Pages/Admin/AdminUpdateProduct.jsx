@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../../Components/Layout';
-import AdminMenu from '../../Components/AdminMenu';
 import toast from 'react-hot-toast';
 import axios from 'axios'
 
-import { Select } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Layout, Select } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import AdminMenu from '../../Components/AdminMenu';
 const { Option } = Select  // option for drop down menu 
 
-const AdminCreateProductPage = () => {
+const AdminUpdateProduct = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const params = useParams();
 
     // State for get All Category 
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
     //create state for form manage
-    const [productName, setProductName] = useState("")
-    const [description, setDescription] = useState("")
-    const [price, setPrice] = useState("")
-    const [categorys, setCategorys] = useState("")
-    const [photo, setPhoto] = useState("")
-    const [quantity, setQuantity] = useState("")
-    const [shipping, setShipping] = useState("")
+    const [productName, setProductName] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+    const [categorys, setCategorys] = useState("");
 
+    const [photo, setPhoto] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [shipping, setShipping] = useState("");
+
+    // individual id 
+    const [id, setId] = useState("")
 
     // get All Categories
 
@@ -51,8 +55,41 @@ const AdminCreateProductPage = () => {
     }, [])
 
 
-    // Create Product function
-    const handleCreate = async (event) => {
+
+
+
+    // get single Product
+
+    const fetchSingleProductData = async () => {
+        try {
+            const response = await axios.get(`/api/v3/products/get-single-products/${params.slug}`)
+
+            // data populated to updated product form on product Edit page 
+            setId(response.data.output._id) // for shipping
+            setProductName(response.data.output.productName)
+            setDescription(response.data.output.description)
+            setPrice(response.data.output.price)
+            setQuantity(response.data.output.quantity)
+            setCategorys(response.data.output.categorys._id) // this categorys comes from data base model
+
+            //setShipping(response.data.output.shipping)
+
+        }
+
+        catch (error) {
+            console.log(error);
+            toast.error("Something went wrong")
+
+        }
+    }
+
+
+    useEffect(() => {
+        fetchSingleProductData()
+    }, [])
+
+    // Update Product function
+    const handleUpdate = async (event) => {
         event.preventDefault()
 
         try {
@@ -97,9 +134,11 @@ const AdminCreateProductPage = () => {
 
     }
 
+
     return (
 
         <>
+
             <Layout title={"Dashboard-Create Product"}>
 
                 <div className="container m-3 p-3 ">
@@ -110,11 +149,14 @@ const AdminCreateProductPage = () => {
                         </div>
 
                         <div className="col-md-9">
-                            <h1> Create Product </h1>
+                            <h1> Update the Product </h1>
 
                             <div className="m-1 w-75">
                                 <Select variant={false} placeholder="Select a Category" size='large' showSearch className='form-select mb-3'
                                     onChange={(value) => { setCategorys(value) }} // value its a props
+
+                                    value={categorys}
+
                                 >
 
                                     {
@@ -199,6 +241,8 @@ const AdminCreateProductPage = () => {
                                         onChange={(value) => {
                                             setShipping(value);
                                         }}
+
+                                        value={shipping ? "yes" : "NO"}
                                     >
                                         <Option value="0">No</Option>
                                         <Option value="1">Yes</Option>
@@ -206,8 +250,8 @@ const AdminCreateProductPage = () => {
                                 </div>
 
                                 <div className="mb-3">
-                                    <button className="btn btn-primary" onClick={handleCreate}>
-                                        CREATE PRODUCT
+                                    <button className="btn btn-primary" onClick={handleUpdate}>
+                                        Update Product
                                     </button>
                                 </div>
 
@@ -217,8 +261,9 @@ const AdminCreateProductPage = () => {
                     </div>
                 </div>
             </Layout>
+
         </>
     );
 };
 
-export default AdminCreateProductPage;
+export default AdminUpdateProduct;

@@ -20,6 +20,8 @@ import AdminCreateProductPage from './Pages/Admin/AdminCreateProductPage'
 import AllUsersPage from './Pages/Admin/AllUsersPage'
 import UserOrderPage from './Pages/User/UserOrderPage'
 import UserProfilePage from './Pages/User/UserProfilePage'
+import AdminProductListPage from './Pages/Admin/AdminProductListPage'
+import AdminUpdateProduct from './Pages/Admin/AdminUpdateProduct'
 
 function App() {
 
@@ -52,6 +54,9 @@ function App() {
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/create-category" element={<AdminCreateCategoryPage />} />
             <Route path="admin/create-product" element={<AdminCreateProductPage />} />
+            <Route path="admin/update-single-product/:slug" element={<AdminUpdateProduct />} />
+            <Route path="admin/products-list" element={<AdminProductListPage />} />
+
             <Route path="admin/useresss" element={<AllUsersPage />} />
 
           </Route>

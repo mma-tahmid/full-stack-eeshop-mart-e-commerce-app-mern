@@ -134,7 +134,7 @@ exports.GetAllProducts = async (req, res) => {
             success: true,
             countTotalProducts: getAllProducts.length,
             message: "All Products",
-            getAllProducts,
+            output: getAllProducts,
 
         })
     }
@@ -159,15 +159,16 @@ exports.GetSingleProducts = async (req, res) => {
 
     try {
 
-        const { productSlug } = req.params.slugss
+        const { slugss } = req.params;
+        // const { productSlug } = req.params.slugss
+        // const productSlug = req.params.slugss
 
-        const singleProduct = await productsModel.findOne({ productSlug }).select("-photo").populate("categorys");
+        const singleProduct = await productsModel.findOne({ slug: slugss }).select("-photo").populate("categorys");
 
         res.status(201).send({
             success: true,
             message: "Single Products Fetched",
-            singleProduct,
-
+            output: singleProduct,
         })
     }
 
