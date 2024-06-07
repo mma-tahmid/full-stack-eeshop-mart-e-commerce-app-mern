@@ -9,7 +9,9 @@ export default defineConfig({
     proxy: {
       // je api endpoint dia start hobe seta bujia diar jonno
       '/api/': {
-        target: 'http://localhost:8000'
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false
         // target: `http://localhost:${process.env.VITE_PORT}`
       }
     }

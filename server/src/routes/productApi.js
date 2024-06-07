@@ -22,5 +22,8 @@ router.delete("/delete-product/:productseId", productsController.DeleteProduct);
 
 router.put("/update-product/:productseId", CheckNormalUser, CheckAdmin, formidableMiddleware(), productsController.UpdateProducts);
 
+// filter Product
+
+router.get("/product-filters, productsController. ")
 
 module.exports = router;

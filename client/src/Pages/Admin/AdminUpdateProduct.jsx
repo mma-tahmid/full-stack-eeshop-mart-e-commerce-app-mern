@@ -61,23 +61,26 @@ const AdminUpdateProduct = () => {
     // get single Product
 
     const fetchSingleProductData = async () => {
+
         try {
             const response = await axios.get(`/api/v3/products/get-single-products/${params.slug}`)
 
             // data populated to updated product form on product Edit page 
-            setId(response.data.output._id) // for shipping
+            setId(response.data.output._id)
             setProductName(response.data.output.productName)
             setDescription(response.data.output.description)
             setPrice(response.data.output.price)
             setQuantity(response.data.output.quantity)
             setCategorys(response.data.output.categorys._id) // this categorys comes from data base model
+            setShipping(response.data.output.shipping);
+            // setPhoto(response.data.output.photo)
+            // setShipping(product.shipping === 1);
 
-            //setShipping(response.data.output.shipping)
 
         }
 
         catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error("Something went wrong")
 
         }
@@ -100,22 +103,20 @@ const AdminUpdateProduct = () => {
             productData.append("description", description)
             productData.append("price", price)
             productData.append("categorys", categorys)
-            productData.append("photo", photo)
+            photo && productData.append("photo", photo)
             productData.append("quantity", quantity)
             productData.append("shipping", shipping)
+            //productData.append("shipping", shipping ? "1" : "0");
 
             // if i don't want to use form data than wrap all input and select tag tags with in form tag and add handle create function on form onSubmit event
 
-            const response = await axios.post("/api/v3/products/create-product", productData)
+            const response = await axios.put(`/api/v3/products/update-product/${id}`, productData)
 
             if (response.data.success) {
 
                 toast.success(response.data.message, { position: "top-right" })
-                navigate("/dashboard/admin/products-list")
+                navigate('/dashboard/admin/products-list')
 
-                // setCategoryName("") // After click submit Button Input field will be clear
-
-                // fetchAllCategoryData() // update all category list 
 
             }
 
@@ -126,7 +127,30 @@ const AdminUpdateProduct = () => {
         }
         catch (error) {
 
-            console.log(error)
+            //console.log(error)
+            toast.error("Something Went wrong")
+
+
+        }
+
+    }
+
+    // Delete Product function
+
+    const handleDelete = async () => {
+
+        try {
+
+            let answer = window.prompt("Are you sure want to delete this product ? ");
+            if (!answer) return
+
+            const response = await axios.delete(`/api/v3/products/delete-product/${id}`)
+            toast.success(response.data.message, { position: "top-right" })
+            navigate('/dashboard/admin/products-list')
+        }
+
+        catch (error) {
+            //console.log(error);
             toast.error("Something Went wrong")
 
 
@@ -192,9 +216,13 @@ const AdminUpdateProduct = () => {
                                 {/* show Image preview (use Browser property) */}
 
                                 <div className="mb-3">
-                                    {photo && (
+                                    {photo ? (
                                         <div className="text-center">
                                             <img src={URL.createObjectURL(photo)} alt="product_photo" height={'200px'} className='img img-responsive' />
+
+                                        </div>) : (
+                                        <div className="text-center">
+                                            <img src={`/api/v3/products/get-product-photo/${id}`} alt="product_photo" height={'200px'} className='img img-responsive' />
 
                                         </div>
                                     )}
@@ -252,6 +280,12 @@ const AdminUpdateProduct = () => {
                                 <div className="mb-3">
                                     <button className="btn btn-primary" onClick={handleUpdate}>
                                         Update Product
+                                    </button>
+                                </div>
+
+                                <div className="mb-3">
+                                    <button className="btn btn-danger" onClick={handleDelete}>
+                                        Delete Product
                                     </button>
                                 </div>
 

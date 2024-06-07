@@ -69,7 +69,9 @@ exports.Registration = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+
+        //console.log(error)
+
         res.status(500).send({
             success: false,
             message: "Error in Registration",
@@ -160,7 +162,8 @@ exports.Login = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
+
         res.status(500).send({
             success: false,
             message: "Error in Login",
@@ -217,7 +220,8 @@ exports.ForgotPassword = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
+
         res.status(500).send({
             success: false,
             message: 'Something went wrong',
@@ -231,9 +235,9 @@ exports.ForgotPassword = async (req, res) => {
 
 // test Controller For authorization
 
-exports.TestController = (req, res) => {
-    res.send("protected Route")
-}
+// exports.TestController = (req, res) => {
+//     res.send("protected Route")
+// }
 
 
 

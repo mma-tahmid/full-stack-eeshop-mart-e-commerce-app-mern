@@ -41,7 +41,8 @@ exports.CreateCategory = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
+
         res.status(500).send({
             success: false,
             error,
@@ -79,7 +80,7 @@ exports.UpdateCategory = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -108,7 +109,7 @@ exports.GetAllCategory = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -136,7 +137,7 @@ exports.GetSingleCategory = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -167,7 +168,7 @@ exports.DeleteCategory = async (req, res) => {
     }
 
     catch (error) {
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,

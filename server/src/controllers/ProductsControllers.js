@@ -47,7 +47,8 @@ exports.CreateProduct = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
+        
         res.status(500).send({
             success: false,
             error,
@@ -104,7 +105,7 @@ exports.UpdateProducts = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -141,7 +142,7 @@ exports.GetAllProducts = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -174,7 +175,7 @@ exports.GetSingleProducts = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error) 
         res.status(500).send({
             success: false,
             error,
@@ -208,7 +209,8 @@ exports.ProductPhotoController = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
+
         res.status(500).send({
             success: false,
             error,
@@ -242,7 +244,7 @@ exports.DeleteProduct = async (req, res) => {
 
     catch (error) {
 
-        console.log(error)
+        //console.log(error)
         res.status(500).send({
             success: false,
             error,
@@ -251,6 +253,34 @@ exports.DeleteProduct = async (req, res) => {
 
         })
 
+    }
+
+}
+
+
+// filter Product
+
+exports.ProductFilter = async (req, res) => {
+
+    try {
+
+      //const { checked, radio } = req.body
+
+        let args = {}
+
+
+
+
+    }
+
+    catch (error) {
+
+        //console.log(error);
+        res.status(400).send({
+            success: false,
+            message: "Error while Filtering Products",
+            error
+        })
     }
 
 }

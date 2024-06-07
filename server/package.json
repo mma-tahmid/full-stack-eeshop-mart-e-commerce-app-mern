@@ -4,7 +4,9 @@
   "description": "ecommerce rest api",
   "main": "index.js",
   "scripts": {
-    "start-dev": "nodemon server.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",

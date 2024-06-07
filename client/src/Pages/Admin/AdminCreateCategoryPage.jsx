@@ -44,7 +44,7 @@ const AdminCreateCategoryPage = () => {
 
         }
         catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error("Something went wrong in input form ")
 
         }
@@ -65,7 +65,7 @@ const AdminCreateCategoryPage = () => {
         }
 
         catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error("Something went wrong")
 
         }
@@ -102,7 +102,7 @@ const AdminCreateCategoryPage = () => {
         }
 
         catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error("Something went wrong")
 
         }
@@ -130,7 +130,7 @@ const AdminCreateCategoryPage = () => {
         }
 
         catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error("Something went wrong")
 
         }
