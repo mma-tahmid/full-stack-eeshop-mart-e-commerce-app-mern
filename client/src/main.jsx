@@ -16,6 +16,7 @@ import '@popperjs/core/dist/umd/popper.min.js'
 
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './contextApi/authContext.jsx';
+import { SearchProvider } from './contextApi/searchcontext.jsx'
 
 
 
@@ -33,9 +34,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
   <AuthProvider>
 
-    <App />
+    <SearchProvider>
+      <App />
 
-    <Toaster />
+      <Toaster />
+    </SearchProvider>
+
 
   </AuthProvider>
 

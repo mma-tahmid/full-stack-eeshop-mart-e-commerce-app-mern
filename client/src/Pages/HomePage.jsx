@@ -18,8 +18,13 @@ const HomePage = () => {
     const [radio, setRadio] = useState([])
 
 
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-    // get All Categories
+
+
+    // get All Categories 
 
     const fetchAllCategoryData = async () => {
 
@@ -47,10 +52,29 @@ const HomePage = () => {
 
     // get All Products
 
+    // const fetchAllProductsData = async () => {
+
+    //     try {
+    //         const response = await axios.get("/api/v3/products/get-all-products")
+    //         setProducts(response.data.output)
+    //         //console.log(response.data.output)
+
+    //     }
+
+    //     catch (error) {
+    //         //console.log()
+    //         toast.error("Something went wrong")
+
+    //     }
+
+    // }
+
     const fetchAllProductsData = async () => {
 
         try {
-            const response = await axios.get("/api/v3/products/get-all-products")
+            setLoading(true)
+            const response = await axios.get(`/api/v3/products/product-listts/${page}`)
+            setLoading(false)
             setProducts(response.data.output)
             //console.log(response.data.output)
 
@@ -58,6 +82,7 @@ const HomePage = () => {
 
         catch (error) {
             //console.log()
+            setLoading(false)
             toast.error("Something went wrong")
 
         }
@@ -65,9 +90,60 @@ const HomePage = () => {
     }
 
     useEffect(() => {
-        fetchAllProductsData()
+        if (!checked.length || !radio.length) fetchAllProductsData()
+    }, [checked.length, radio.length])
+
+    useEffect(() => {
+        if (checked.length || radio.length) filterProducts()
+    }, [checked, radio])
+
+
+
+    // get Total Count
+    const fetchTotalCountNumber = async () => {
+
+        try {
+
+            const response = await axios.get("/api/v3/products/product-count")
+            setTotal(response.data.output)
+        }
+
+        catch (error) {
+
+            console.log(error)
+
+        }
+
+    }
+
+    useEffect(() => {
+
+        fetchTotalCountNumber()
     }, [])
 
+
+    // Load More function
+    const loadingMore = async () => {
+
+        try {
+            setLoading(true)
+            const response = await axios.get(`/api/v3/products/product-listts/${page}`)
+            setProducts([...products, ...response.data.output])
+            setLoading(false)
+        }
+
+        catch (error) {
+
+            //console.log(error)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        if (page === 1) return
+        loadingMore()
+
+    }, [page])
 
     // Filter By Category
     const handleFilter = (value, id) => {
@@ -83,6 +159,23 @@ const HomePage = () => {
 
         setChecked(all)
 
+    }
+
+
+
+    // get filter Products
+
+    const filterProducts = async () => {
+
+        try {
+
+            const response = await axios.post(`/api/v3/products/product-filters`, { checked, radio })
+            setProducts(response.data.output)
+        }
+        catch (error) {
+            console.log(error)
+
+        }
     }
     return (
 
@@ -138,6 +231,14 @@ const HomePage = () => {
 
                         </div>
 
+                        <div className='d-flex flex-column mt-4'>
+
+                            {/* Reload the Browser Automatic */}
+
+                            <button className='btn btn-secondary w-50' onClick={() => window.location.reload()}> Reset Filter  </button>
+
+                        </div>
+
                     </div>
 
                     <div className="col-md-9">
@@ -159,7 +260,8 @@ const HomePage = () => {
 
                                             <div className="card-body">
                                                 <h5 className="card-title">{singleProduct.productName}</h5>
-                                                <p className="card-text">{singleProduct.description} </p>
+                                                <p className="card-text">{singleProduct.description.substring(0, 30)}... </p>
+                                                <p className="card-text"> BDT {singleProduct.price} </p>
 
 
                                                 <button className='btn btn-primary ms-1'> More Details</button>
@@ -173,10 +275,27 @@ const HomePage = () => {
                                 })
                             }
 
-                            <h1>Products</h1>
+
+                        </div>
+
+                        <div className='m-2 p-3'>
+
+                            {products && products.length < total && (
+                                <button className='btn btn-warning' onClick={(e) => {
+                                    e.preventDefault()
+
+                                    setPage(page + 1)
+                                }}>
+                                    {loading ? "Loading" : "Load More"}
+                                </button>
+                            )
+
+                            }
 
                         </div>
                     </div>
+
+
                 </div>
             </Layout >
 

@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { GiShop } from "react-icons/gi";
 import { useAuth } from '../contextApi/authContext';
 import toast from 'react-hot-toast';
+import SearchInput from './Form/SearchInput';
 
 const NavBarComponent = () => {
 
@@ -42,6 +43,8 @@ const NavBarComponent = () => {
 
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             {/* me-auto */}
+                            <SearchInput />
+
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link ">Home</NavLink>
                             </li>

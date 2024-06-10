@@ -24,6 +24,18 @@ router.put("/update-product/:productseId", CheckNormalUser, CheckAdmin, formidab
 
 // filter Product
 
-router.get("/product-filters, productsController. ")
+router.post("/product-filters", productsController.ProductsFilter)
+
+// product Count 
+router.get("/product-count", productsController.ProductsCount);
+
+// Product Per Page
+router.get("/product-listts/:page", productsController.ProductsListBasedOnPage);
+
+// Search Product
+
+router.get("/search-product/:keywords", productsController.SearchProduct);
+
+
 
 module.exports = router;

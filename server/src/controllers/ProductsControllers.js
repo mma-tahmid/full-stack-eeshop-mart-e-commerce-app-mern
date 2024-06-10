@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 const productsModel = require('../models/productModel');
+const categorysModel = require("../models/categoryModel");
 const { default: slugify } = require('slugify');
 
 // Create New Product
@@ -48,7 +49,7 @@ exports.CreateProduct = async (req, res) => {
     catch (error) {
 
         //console.log(error)
-        
+
         res.status(500).send({
             success: false,
             error,
@@ -260,14 +261,23 @@ exports.DeleteProduct = async (req, res) => {
 
 // filter Product
 
-exports.ProductFilter = async (req, res) => {
+exports.ProductsFilter = async (req, res) => {
 
     try {
 
-      //const { checked, radio } = req.body
+        const { checked, radio } = req.body
 
         let args = {}
+        if (checked.length > 0) args.categorys = checked
+        if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] }
 
+        const filterProducts = await productsModel.find(args)
+        res.status(201).send({
+            success: true,
+            message: "Products Filter Successfully",
+            output: filterProducts
+
+        })
 
 
 
@@ -286,3 +296,89 @@ exports.ProductFilter = async (req, res) => {
 }
 
 
+// Products Count Controller
+
+exports.ProductsCount = async (req, res) => {
+
+    try {
+
+        const total = await productsModel.find({}).estimatedDocumentCount()
+        res.status(201).send({
+            success: true,
+            output: total
+
+        })
+
+    }
+
+    catch (error) {
+        res.status(400).send({
+            success: false,
+            message: "Error while Filtering Products",
+            error
+        })
+    }
+
+}
+
+
+// Product List based on page
+exports.ProductsListBasedOnPage = async (req, res) => {
+
+    try {
+
+        const perPage = 6;
+        const pages = req.params.page ? req.params.page : 1
+        const productss = await productsModel.find({}).select("-photo").skip((pages - 1) * perPage).limit(perPage).sort({ createdAt: -1 })
+
+        res.status(201).send({
+            success: true,
+            output: productss
+
+        })
+
+    }
+
+    catch (error) {
+        res.status(400).send({
+            success: false,
+            message: "Error in per page",
+            error
+        })
+    }
+}
+
+// product search 
+
+
+exports.SearchProduct = async (req, res) => {
+
+    try {
+
+        const keyWords = req.params.keywords
+
+        const results = await productsModel.find({
+            $or: [
+                { productName: { $regex: keyWords, $options: "i" } },// i means ----> Case insenstivity
+                { description: { $regex: keyWords, $options: "i" } }
+            ]
+        }).select("-photo")
+
+        res.status(201).send({
+            success: true,
+            output: results
+
+        })
+
+    }
+
+    catch (error) {
+
+        res.status(400).send({
+            success: false,
+            message: "Error in Search Product",
+            error
+        })
+    }
+
+}
