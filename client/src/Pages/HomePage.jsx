@@ -5,8 +5,11 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import { Checkbox, Radio } from 'antd';
 import { prices } from '../Components/Price';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+
+    const navigate = useNavigate()
 
     const [auth, setAuth] = useAuth()
 
@@ -264,7 +267,7 @@ const HomePage = () => {
                                                 <p className="card-text"> BDT {singleProduct.price} </p>
 
 
-                                                <button className='btn btn-primary ms-1'> More Details</button>
+                                                <button className='btn btn-primary ms-1' onClick={() => navigate(`/product-details/${singleProduct.slug}`)} > More Details</button>
 
                                                 <button className='btn btn-secondary ms-1'> Add to Cart </button>
                                             </div>

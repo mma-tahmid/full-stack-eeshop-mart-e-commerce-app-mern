@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 const productsModel = require('../models/productModel');
-const categorysModel = require("../models/categoryModel");
+
 const { default: slugify } = require('slugify');
 
 // Create New Product
@@ -380,5 +380,40 @@ exports.SearchProduct = async (req, res) => {
             error
         })
     }
+
+}
+
+
+// Similar Product
+
+exports.SimilarProduct = async (req, res) => {
+
+    try {
+
+        const { productId, categoryId } = req.params
+
+        const similarProduct = await productsModel.find({
+            categorys: categoryId,
+            _id: { $ne: productId }, // not include it ($ne is a function) 
+        }).select("-photo").limit(4).populate("categorys") // Populate according to Category
+
+        res.status(201).send({
+            success: true,
+            output: similarProduct
+
+        })
+    }
+
+    catch (error) {
+
+        // console.log(error)
+
+        res.status(400).send({
+            success: false,
+            message: "Error while getting Similar Product",
+            error
+        })
+    }
+
 
 }

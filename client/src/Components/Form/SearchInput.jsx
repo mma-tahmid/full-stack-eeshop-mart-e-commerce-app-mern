@@ -16,7 +16,7 @@ const SearchInput = () => {
 
             e.preventDefault()
             const response = await axios.get(`/api/v3/products/search-product/${searchValue.keyword}`)
-            setSearchValue({ ...searchValue, results: response })
+            setSearchValue({ ...searchValue, results: response.data.output })
             navigate("/search")
 
         }

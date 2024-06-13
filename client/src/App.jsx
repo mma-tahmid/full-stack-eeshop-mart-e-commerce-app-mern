@@ -22,6 +22,8 @@ import UserOrderPage from './Pages/User/UserOrderPage'
 import UserProfilePage from './Pages/User/UserProfilePage'
 import AdminProductListPage from './Pages/Admin/AdminProductListPage'
 import AdminUpdateProduct from './Pages/Admin/AdminUpdateProduct'
+import SearchPage from './Pages/SearchPage'
+import ProductDetailsPage from './Pages/ProductDetailsPage'
 
 function App() {
 
@@ -38,6 +40,8 @@ function App() {
 
 
           <Route path="/" element={<HomePage />} />
+          <Route path="/product-details/:slug" element={<ProductDetailsPage />} />
+          <Route path="/search" element={<SearchPage />} />
 
           {/* Nested Routes */}
 

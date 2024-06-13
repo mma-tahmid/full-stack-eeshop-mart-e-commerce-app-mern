@@ -36,6 +36,7 @@ router.get("/product-listts/:page", productsController.ProductsListBasedOnPage);
 
 router.get("/search-product/:keywords", productsController.SearchProduct);
 
-
+// Similar Product
+router.get("/similar-product/:productId/:categoryId", productsController.SimilarProduct);
 
 module.exports = router;
