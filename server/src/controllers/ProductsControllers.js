@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 const productsModel = require('../models/productModel');
+const categorysModel = require('../models/categoryModel.js')
 
 const { default: slugify } = require('slugify');
 
@@ -415,5 +416,34 @@ exports.SimilarProduct = async (req, res) => {
         })
     }
 
+
+}
+
+// Category Wise Product (get product by category)
+exports.CategoryWiseProduct = async (req, res) => {
+
+    try {
+        const uniqueSlug = req.params.sluges
+        const singleCategory = await categorysModel.findOne({ slug: uniqueSlug })
+        // const products = await productsModel.find({ singleCategory }).populate("categorys");
+        const products = await productsModel.find({ categorys: singleCategory._id }).populate("categorys");
+
+        res.status(200).send({
+            success: true,
+            output1: singleCategory,
+            output2: products
+
+        })
+
+    }
+
+    catch (error) {
+        console.log(error)
+        res.status(400).send({
+            success: false,
+            message: "Error while getting Category wise Product",
+            error
+        })
+    }
 
 }

@@ -39,4 +39,7 @@ router.get("/search-product/:keywords", productsController.SearchProduct);
 // Similar Product
 router.get("/similar-product/:productId/:categoryId", productsController.SimilarProduct);
 
+// Category Wise Product
+router.get("/category-wise-product/:sluges", productsController.CategoryWiseProduct);
+
 module.exports = router;
